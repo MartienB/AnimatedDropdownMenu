@@ -288,7 +288,7 @@ public class AnimatedDropdownMenu: UIView {
         tableView.frame.origin.y = -CGFloat(items.count) * dropdownConfig.cellHeight - 300.0
         tableView.reloadData()
         
-        menuWrapper.superview?.bringSubviewToFront(menuWrapper)
+        menuWrapper.superview?.bringSubview(toFront: menuWrapper)
         
         UIView.animate(withDuration: dropdownConfig.animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIView.AnimationOptions(), animations: {
             self.tableView.frame.origin.y = CGFloat(-300.0)
