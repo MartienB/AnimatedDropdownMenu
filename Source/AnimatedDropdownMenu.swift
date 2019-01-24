@@ -144,7 +144,7 @@ public class AnimatedDropdownMenu: UIView {
         let title = items[selectedIndex].title
         
         //Get titleSize
-        let titleSize = (title as NSString).size(attributes: [NSFontAttributeName: dropdownConfig.menuTitleFont])
+        let titleSize = (title as NSString).size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): dropdownConfig.menuTitleFont]))
         
         //Init frame
         let frame = CGRect(x: 0, y: 0, width: titleSize.width + dropdownConfig.arrowPadding + dropdownConfig.arrowImage.size.width * 2, height: navigationController.navigationBar.frame.height)
@@ -232,7 +232,7 @@ public class AnimatedDropdownMenu: UIView {
     
     fileprivate func setupDefaultConfiguration() {
         
-        menuTitleColor = navigationController?.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+        menuTitleColor = convertFromOptionalNSAttributedStringKeyDictionary(navigationController?.navigationBar.titleTextAttributes)?[convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor)] as? UIColor
         cellBackgroundColor = navigationController?.navigationBar.barTintColor
         cellTextColor = menuTitleColor
         cellSeparatorColor = .clear
@@ -258,7 +258,7 @@ public class AnimatedDropdownMenu: UIView {
                        delay: 0,
                        usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 0.5,
-                       options: UIViewAnimationOptions(),
+                       options: UIView.AnimationOptions(),
                        animations: {
                         self.tableView.frame.origin.y = -CGFloat(self.items.count) * self.dropdownConfig.cellHeight - 300.0
                         self.backgroundView.alpha = 0
@@ -288,9 +288,9 @@ public class AnimatedDropdownMenu: UIView {
         tableView.frame.origin.y = -CGFloat(items.count) * dropdownConfig.cellHeight - 300.0
         tableView.reloadData()
         
-        menuWrapper.superview?.bringSubview(toFront: menuWrapper)
+        menuWrapper.superview?.bringSubviewToFront(menuWrapper)
         
-        UIView.animate(withDuration: dropdownConfig.animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { 
+        UIView.animate(withDuration: dropdownConfig.animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIView.AnimationOptions(), animations: {
             self.tableView.frame.origin.y = CGFloat(-300.0)
             self.backgroundView.alpha = self.dropdownConfig.maskBackgroundOpacity
         }) { finished in
@@ -303,7 +303,7 @@ public class AnimatedDropdownMenu: UIView {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.menuArrow.transform = strongSelf.menuArrow.transform.rotated(by: 180 * CGFloat(M_PI/180))
+            strongSelf.menuArrow.transform = strongSelf.menuArrow.transform.rotated(by: 180 * CGFloat(Double.pi/180))
         }
     }
     
@@ -344,4 +344,21 @@ extension UIViewController {
         return self
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+    guard let input = input else { return nil }
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+    return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]?) -> [String: Any]? {
+    guard let input = input else { return nil }
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

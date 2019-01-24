@@ -143,7 +143,7 @@ public class AnimatedDropdownMenu: UIView {
         
         let title = items[selectedIndex].title
         
-        //Get titleSize-
+        //Get titleSize
         let titleSize = (title as NSString).size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): dropdownConfig.menuTitleFont]))
         
         //Init frame
