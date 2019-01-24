@@ -24,13 +24,24 @@ class DropdownMenuNavigationController: UINavigationController {
         navigationBar.setBackgroundImage(nil, for: .default)
         
         let textAttributes: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.menuLightTextColor(),
-            NSFontAttributeName: UIFont.navigationBarTitleFont()
+            convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.menuLightTextColor(),
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font): UIFont.navigationBarTitleFont()
         ]
         
-        navigationBar.titleTextAttributes = textAttributes
+        navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(textAttributes)
         navigationBar.tintColor = UIColor.menuLightTextColor()
         
         navigationBar.barTintColor = UIColor.menuLightTextColor()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

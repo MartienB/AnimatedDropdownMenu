@@ -90,11 +90,22 @@ class LeftTypeSixViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.menuPurpleColor()
         
         let textAttributes: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.menuLightTextColor(),
-            NSFontAttributeName: UIFont.navigationBarTitleFont()
+            convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.menuLightTextColor(),
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font): UIFont.navigationBarTitleFont()
         ]
         
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(textAttributes)
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

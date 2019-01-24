@@ -15,7 +15,7 @@ public class DropdownMenuTableViewCell: UITableViewCell {
     var cellContentFrame: CGRect!
     var dropdownMenuConfig: DropdownMenuConfig!
     
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, config: DropdownMenuConfig) {
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, config: DropdownMenuConfig) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         dropdownMenuConfig = config
