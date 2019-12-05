@@ -14,11 +14,13 @@ public class AnimatedDropdownMenu: UIView {
         public let title: String
         public let icon: UIImage?
         public let iconLight: UIImage?
+        public let id: String?
         
-        public init(_ title: String, _ icon: UIImage?, _ iconLight: UIImage?) {
+        public init(_ title: String, _ icon: UIImage?, _ iconLight: UIImage?, _ id: String?) {
             self.title = title
             self.icon = icon
             self.iconLight = iconLight
+            self.id = id
         }
     }
     
